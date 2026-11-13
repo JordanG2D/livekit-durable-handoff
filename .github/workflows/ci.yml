@@ -1,0 +1,39 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      # Offline by construction: no keys are configured, and every agent in the
+      # tests uses ScriptedLLM. These are blanked so a stray live call fails loudly.
+      OPENAI_API_KEY: ""
+      LIVEKIT_API_KEY: ""
+      LIVEKIT_API_SECRET: ""
+    strategy:
+      matrix:
+        python: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: ${{ matrix.python }}
+          enable-cache: true
+      # The Temporal dev server binary is the only download, cached across runs.
+      - uses: actions/cache@v4
+        with:
+          path: .temporal-cache
+          key: temporal-dev-server-${{ runner.os }}-${{ hashFiles('uv.lock') }}
+      - run: uv sync --locked
+      - run: uv run ruff format --check .
+      - run: uv run ruff check .
+      - run: uv run mypy
+      - run: uv run pytest -v
+      - name: worker logs on failure
+        if: failure()
+        run: find /tmp -name 'worker-*.log' -path '*pytest*' -exec sh -c 'echo "== $1"; cat "$1"' _ {} \;
