@@ -196,6 +196,5 @@ pieces (`AgentSession`, `Agent`, function tools, tool-returns-`Agent` handoff,
 long-running work, a versioned handoff contract, and an SMS edge. Most of what it
 builds by hand maps onto a 2.0 concept: the `HandoffContext` onto thread state and
 the agent stack, the SMS channel onto planned channels, and the workflow onto
-planned background tasks. The parts 2.0 leaves open (agent-initiated messages,
-re-driving a background task whose worker died, offline tests) are where the drafts
-in [DRAFT_ISSUES.md](DRAFT_ISSUES.md) focus.
+planned background tasks. The parts 2.0 leaves open are agent-initiated messages,
+re-driving a background task whose worker died, and offline tests.

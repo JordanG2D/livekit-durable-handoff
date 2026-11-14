@@ -273,8 +273,7 @@ retry can redo the step in flight. Steps must be idempotent too.
 ## Gaps and ideas
 
 This is where the framework made the example harder. Each item has a concrete
-suggestion. The ones that might be worth filing are drafted, with duplicate searches,
-in [DRAFT_ISSUES.md](DRAFT_ISSUES.md). NOTES.md has the evidence.
+suggestion. [NOTES.md](NOTES.md) has the evidence.
 
 1. **Session close and long async tools are undocumented, and the behavior is
    surprising.** `session.aclose()` waits for every non-cancellable async tool
@@ -331,7 +330,6 @@ in [DRAFT_ISSUES.md](DRAFT_ISSUES.md). NOTES.md has the evidence.
 | [`scripted_llm.py`](src/durable_handoff/scripted_llm.py) | offline deterministic `llm.LLM` |
 | [`worker.py`](src/durable_handoff/worker.py), [`demo.py`](src/durable_handoff/demo.py), [`voice.py`](src/durable_handoff/voice.py) | entrypoints |
 | [`NOTES.md`](NOTES.md) | how the framework handles sessions, state and handoff today, with citations |
-| [`DRAFT_ISSUES.md`](DRAFT_ISSUES.md) | proposed upstream issues, unfiled, for review |
 
 ## Relation to Agents 2.0
 
